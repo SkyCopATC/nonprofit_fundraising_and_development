@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nonprofit Fundraising & Development — User Guide</title>
+<style>
+:root {
+  --navy:   #1B3A6B;
+  --gold:   #C9922A;
+  --teal:   #0D7377;
+  --green:  #059669;
+  --light:  #EFF4FA;
+  --mid:    #C8D8EA;
+  --dark:   #1E293B;
+  --muted:  #64748B;
+  --white:  #FFFFFF;
+  --bg:     #F0F4F8;
+  --card:   #FFFFFF;
+  --border: #E2E8F0;
+  --radius: 10px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--dark);
+  line-height: 1.65;
+  font-size: 15px;
+}
+
+/* ── Layout ── */
+.layout { display: flex; min-height: 100vh; }
+
+/* ── Sidebar ── */
+.sidebar {
+  width: 275px;
+  min-width: 275px;
+  background: var(--navy);
+  color: #fff;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 0 0 32px;
+  flex-shrink: 0;
+}
+.sidebar-brand {
+  padding: 22px 20px 18px;
+  border-bottom: 1px solid rgba(255,255,255,.15);
+  margin-bottom: 10px;
+}
+.sidebar-brand .logo { font-size: 13px; font-weight: 800; color: var(--gold); letter-spacing: .5px; }
+.sidebar-brand .sub  { font-size: 10.5px; color: rgba(255,255,255,.5); margin-top: 3px; }
+.toc-label {
+  font-size: 9.5px; text-transform: uppercase; letter-spacing: 1px;
+  color: rgba(255,255,255,.38); padding: 10px 20px 3px;
+}
+.toc a {
+  display: block; padding: 6.5px 20px;
+  color: rgba(255,255,255,.72); text-decoration: none;
+  font-size: 12.5px; border-left: 3px solid transparent; transition: all .15s;
+}
+.toc a:hover { color:#fff; background:rgba(255,255,255,.08); border-left-color:var(--gold); }
+.toc a.sub  { padding-left: 34px; font-size: 11.5px; color: rgba(255,255,255,.52); }
+.toc a.sub:hover { color: rgba(255,255,255,.82); }
+
+/* ── Main ── */
+.main { flex:1; min-width:0; padding:44px 52px; max-width:860px; }
+@media(max-width:800px){ .sidebar{display:none} .main{padding:22px 18px} }
+
+/* ── Hero ── */
+.hero {
+  background: linear-gradient(135deg, var(--navy) 0%, #2563EB 100%);
+  border-radius: var(--radius); padding: 38px 44px; color: #fff; margin-bottom: 44px;
+}
+.hero-eyebrow { font-size:11px; text-transform:uppercase; letter-spacing:1.5px; color:var(--gold); margin-bottom:9px; font-weight:700; }
+.hero h1 { font-size:29px; font-weight:800; line-height:1.2; margin-bottom:9px; }
+.hero p  { color:rgba(255,255,255,.75); font-size:14.5px; max-width:540px; }
+
+/* ── Section ── */
+.section { margin-bottom: 52px; scroll-margin-top: 24px; }
+h2 {
+  font-size: 20px; font-weight: 700; color: var(--navy);
+  padding-bottom: 9px; border-bottom: 2px solid var(--mid);
+  margin-bottom: 20px;
+}
+h3 { font-size: 15.5px; font-weight: 700; color: var(--navy); margin: 22px 0 9px; }
+h4 { font-size: 13.5px; font-weight: 700; color: var(--dark); margin: 16px 0 6px; }
+p  { margin-bottom: 13px; font-size: 14.5px; line-height: 1.68; }
+ul, ol { padding-left: 22px; margin-bottom: 13px; }
+li { margin-bottom: 5px; font-size: 14.5px; line-height: 1.6; }
+strong { color: var(--navy); }
+
+/* ── Cards / callouts ── */
+.card {
+  background: var(--card); border-radius: var(--radius);
+  border: 1px solid var(--border); padding: 18px 22px;
+  margin-bottom: 14px; box-shadow: 0 1px 4px rgba(0,0,0,.06);
+}
+.card h4 { margin-top: 0; }
+
+.note {
+  border-radius: 9px; padding: 13px 16px; margin: 14px 0;
+  font-size: 13.5px; line-height: 1.6;
+}
+.note-blue  { background:#EFF6FF; border-left:4px solid #3B82F6; color:#1E3A8A; }
+.note-gold  { background:#FFFBEB; border-left:4px solid var(--gold); color:#78350F; }
+.note-green { background:#F0FDF4; border-left:4px solid var(--green); color:#064E3B; }
+.note-gray  { background:#F8FAFC; border-left:4px solid #94A3B8; color:#475569; }
+.note strong{ color: inherit; }
+
+/* ── Feature grid ── */
+.feat-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:12px; margin:18px 0; }
+.feat-card {
+  background:var(--card); border-radius:9px; padding:16px;
+  border:1px solid var(--border); box-shadow:0 1px 3px rgba(0,0,0,.05);
+}
+.feat-icon { font-size:20px; margin-bottom:7px; }
+.feat-title { font-size:13px; font-weight:700; color:var(--navy); margin-bottom:4px; }
+.feat-desc  { font-size:12px; color:var(--muted); line-height:1.5; }
+
+/* ── Step list ── */
+.steps { counter-reset: step; margin: 14px 0; }
+.step {
+  display: flex; gap: 14px; margin-bottom: 13px; align-items: flex-start;
+}
+.step-num {
+  width: 26px; height: 26px; border-radius: 50%;
+  background: var(--navy); color: #fff;
+  font-size: 12px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  margin-top: 1px;
+}
+.step-body { flex:1; font-size: 14px; line-height: 1.6; }
+.step-body strong { color: var(--navy); display: block; margin-bottom: 2px; font-size: 14px; }
+
+/* ── Table ── */
+.tbl { width:100%; border-collapse:collapse; font-size:13.5px; margin:16px 0; border-radius:9px; overflow:hidden; border:1px solid var(--border); }
+.tbl th { background:var(--navy); color:#fff; padding:9px 13px; text-align:left; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; }
+.tbl td { padding:9px 13px; border-bottom:1px solid var(--border); vertical-align:top; line-height:1.55; }
+.tbl tr:last-child td { border-bottom:none; }
+.tbl tr:nth-child(even) td { background:#F8FAFC; }
+
+/* ── Badge ── */
+.badge {
+  display:inline-block; padding:2px 8px; border-radius:99px;
+  font-size:11px; font-weight:700; letter-spacing:.03em;
+}
+.badge-navy  { background:#EEF2FF; color:var(--navy); }
+.badge-gold  { background:#FEF3C7; color:#92400E; }
+.badge-green { background:#D1FAE5; color:#065F46; }
+.badge-gray  { background:#F1F5F9; color:#475569; }
+
+/* ── Module color chips ── */
+.mod-chip {
+  display:inline-flex; align-items:center; gap:6px;
+  padding:4px 10px; border-radius:99px; font-size:12px; font-weight:700;
+  margin:3px; border:1px solid rgba(0,0,0,.08);
+}
+
+/* ── kbd ── */
+kbd {
+  background:#F1F5F9; border:1px solid #CBD5E1; border-radius:4px;
+  padding:1px 6px; font-size:12px; font-family:monospace; color:var(--dark);
+}
+
+/* ── FAQ ── */
+.faq-item { border-bottom:1px solid var(--border); padding: 14px 0; }
+.faq-item:last-child { border-bottom:none; }
+.faq-q { font-weight:700; color:var(--navy); font-size:14.5px; margin-bottom:6px; }
+.faq-a { font-size:13.5px; color:var(--muted); line-height:1.6; }
+
+/* ── Toolkit box ── */
+.tk-row {
+  display:flex; align-items:center; gap:13px;
+  background:#F0FDF4; border:1px solid #BBF7D0; border-radius:9px;
+  padding:12px 16px; margin-bottom:9px;
+}
+.tk-icon { font-size:18px; flex-shrink:0; }
+.tk-label { font-size:13px; font-weight:700; color:#065F46; flex:1; }
+.tk-mod   { font-size:11px; color:#047857; }
+
+/* ── Print ── */
+@media print { .sidebar { display:none; } .main { padding:20px; max-width:100%; } }
+</style>
+</head>
+<body>
+<div class="layout">
+
+<!-- ═══════════════════════════ SIDEBAR ═══════════════════════════ -->
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <div class="logo">📚 Nonprofit Fundraising</div>
+    <div class="sub">User Guide — Build Your Club</div>
+  </div>
+
+  <div class="toc-label">Getting Started</div>
+  <div class="toc">
+    <a href="#intro">1. Introduction</a>
+    <a href="#create-account" class="sub">Creating an Account</a>
+    <a href="#sign-in" class="sub">Signing In</a>
+    <a href="#sign-out" class="sub">Signing Out</a>
+  </div>
+
+  <div class="toc-label">Dashboard</div>
+  <div class="toc">
+    <a href="#dashboard">2. Dashboard Overview</a>
+    <a href="#progress-bar" class="sub">Progress Bar</a>
+    <a href="#stats-strip" class="sub">Stats Strip</a>
+    <a href="#dash-tabs" class="sub">Dashboard Tabs</a>
+  </div>
+
+  <div class="toc-label">Learning</div>
+  <div class="toc">
+    <a href="#modules">3. Course Modules</a>
+    <a href="#lessons" class="sub">Lessons</a>
+    <a href="#quizzes" class="sub">Quizzes</a>
+    <a href="#notes" class="sub">Notes & Activities</a>
+    <a href="#toolkits" class="sub">Excel Toolkits</a>
+    <a href="#search" class="sub">Lesson Search</a>
+  </div>
+
+  <div class="toc-label">Features</div>
+  <div class="toc">
+    <a href="#glossary">4. Glossary</a>
+    <a href="#resources">5. Resource Library</a>
+    <a href="#streak">6. Streak Tracking</a>
+    <a href="#certificate">7. Certificate of Completion</a>
+  </div>
+
+  <div class="toc-label">Team & Admin</div>
+  <div class="toc">
+    <a href="#team">8. Team Enrollment</a>
+    <a href="#team-leader" class="sub">Team Leaders</a>
+    <a href="#team-member" class="sub">Joining a Team</a>
+    <a href="#admin">9. Admin Panel</a>
+  </div>
+
+  <div class="toc-label">Reference</div>
+  <div class="toc">
+    <a href="#toolkits-list">10. Toolkit Reference</a>
+    <a href="#faq">11. FAQ & Troubleshooting</a>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════ MAIN ═══════════════════════════════ -->
+<main class="main">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow">Build Your Club — User Guide</div>
+    <h1>Nonprofit Fundraising &amp; Development</h1>
+    <p>Everything you need to navigate the course, track your progress, use your Excel toolkits, and get the most out of every lesson and quiz.</p>
+  </div>
+
+
+  <!-- ═══ 1. INTRODUCTION ═══ -->
+  <section class="section" id="intro">
+    <h2>1. Introduction</h2>
+    <p>The <strong>Nonprofit Fundraising &amp; Development</strong> course is a comprehensive, self-paced learning platform covering every major area of nonprofit fundraising — from foundational principles and donor psychology to major gifts, grants, planned giving, and capital campaigns.</p>
+    <p>The course includes <strong>10 modules</strong>, each containing multiple lessons, a comprehension quiz, and a practical Excel toolkit to apply what you've learned. All your progress, notes, and activity responses are saved automatically to your browser so you can pick up right where you left off.</p>
+
+    <div class="feat-grid">
+      <div class="feat-card">
+        <div class="feat-icon">📚</div>
+        <div class="feat-title">10 Modules</div>
+        <div class="feat-desc">Beginner to advanced coverage of every major fundraising discipline</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">📝</div>
+        <div class="feat-title">Quizzes & Activities</div>
+        <div class="feat-desc">Knowledge checks and reflective activities to reinforce learning</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">📊</div>
+        <div class="feat-title">Excel Toolkits</div>
+        <div class="feat-desc">Ready-to-use professional spreadsheets for each fundraising area</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">📖</div>
+        <div class="feat-title">Glossary</div>
+        <div class="feat-desc">60+ fundraising terms defined in plain language</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🔗</div>
+        <div class="feat-title">Resource Library</div>
+        <div class="feat-desc">Curated tools, templates, and external resources for practitioners</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🏅</div>
+        <div class="feat-title">Certificate</div>
+        <div class="feat-desc">Printable certificate of completion when you finish all 10 modules</div>
+      </div>
+    </div>
+
+    <h3 id="create-account">Creating an Account</h3>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Open the course</strong> The sign-in screen appears automatically. Click <strong>Sign Up</strong> to switch to the registration form.</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Enter your name and email</strong> Use a valid email address — this is your account identifier and must be unique.</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Create a password</strong> Minimum 6 characters. Re-enter it to confirm.</div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-body"><strong>Team code (optional)</strong> If your organization has a team, enter the team code here. You can also join a team later from the dashboard.</div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-body"><strong>Accept terms &amp; click "Create Free Account"</strong> You are signed in immediately and taken to the dashboard.</div></div>
+    </div>
+
+    <h3 id="sign-in">Signing In</h3>
+    <p>On the sign-in screen, enter your registered email and password, then click <strong>Sign In</strong>. Your progress, notes, and streak are restored automatically.</p>
+    <div class="note note-blue">
+      <strong>Account storage:</strong> All data is stored locally in your browser using <kbd>localStorage</kbd>. Accounts are tied to the device and browser you use. Clearing browser data or switching browsers will reset your progress.
+    </div>
+
+    <h3 id="sign-out">Signing Out</h3>
+    <p>Click <strong>Sign Out</strong> in the top-right header bar at any time to log out. Your progress is saved automatically before sign-out.</p>
+  </section>
+
+
+  <!-- ═══ 2. DASHBOARD ═══ -->
+  <section class="section" id="dashboard">
+    <h2>2. Dashboard Overview</h2>
+    <p>After signing in, you land on the <strong>Dashboard</strong> — your home base. It shows your overall progress, learning streak, and tabs for navigating modules, the glossary, and the resource library.</p>
+    <p>Click the <strong>BYC logo and course title</strong> in the header at any time to return to the Dashboard from anywhere in the app.</p>
+
+    <h3 id="progress-bar">Overall Progress Bar</h3>
+    <p>The blue progress bar beneath the hero banner shows your <strong>percentage of lessons and quizzes completed</strong> across all 10 modules. It updates every time you complete a lesson or pass a quiz. When it reaches 100%, your Certificate of Completion becomes available.</p>
+
+    <h3 id="stats-strip" >Stats Strip</h3>
+    <p>Three stat cards sit below the progress bar:</p>
+    <table class="tbl">
+      <tr><th>Stat</th><th>What it shows</th></tr>
+      <tr><td>🔥 <strong>Current Streak</strong></td><td>Consecutive days with at least one completed lesson. Completing a lesson today extends your streak. Missing a day resets it to zero.</td></tr>
+      <tr><td>🏆 <strong>Best Streak</strong></td><td>Your all-time longest streak — a personal record that persists even after a streak is broken.</td></tr>
+      <tr><td>⏰ <strong>Content Remaining</strong></td><td>Approximate time left to finish all uncompleted lessons, based on each lesson's listed duration.</td></tr>
+    </table>
+    <div class="note note-gold">
+      <strong>Streak tip:</strong> The streak icon changes color as you build it — 3+ days turns orange (💥), 7+ days turns flame (🔥). Complete at least one lesson per day to keep your streak alive.
+    </div>
+
+    <h3 id="dash-tabs">Dashboard Tabs</h3>
+    <p>Three tabs organize the main dashboard content:</p>
+    <table class="tbl">
+      <tr><th>Tab</th><th>Content</th></tr>
+      <tr><td>📚 <strong>Course Modules</strong></td><td>All 10 modules as clickable cards, with progress bars and level indicators. Click any module card to open it.</td></tr>
+      <tr><td>📖 <strong>Glossary</strong></td><td>60+ fundraising terms searchable by keyword or browsable by letter. See Section 4 for details.</td></tr>
+      <tr><td>🔗 <strong>Resource Library</strong></td><td>Curated external tools, guides, and references by topic. See Section 5 for details.</td></tr>
+    </table>
+  </section>
+
+
+  <!-- ═══ 3. COURSE MODULES ═══ -->
+  <section class="section" id="modules">
+    <h2>3. Course Modules</h2>
+    <p>The course is organized into 10 modules, each covering a major area of nonprofit fundraising. They are designed to be taken in order, but all modules are unlocked and accessible from day one.</p>
+
+    <table class="tbl">
+      <tr><th>#</th><th>Module</th><th>Level</th></tr>
+      <tr><td>1</td><td>Foundations of Nonprofit Fundraising</td><td><span class="badge badge-green">Beginner</span></td></tr>
+      <tr><td>2</td><td>Individual Giving &amp; Donor Relations</td><td><span class="badge badge-green">Beginner–Int.</span></td></tr>
+      <tr><td>3</td><td>Major Gifts</td><td><span class="badge badge-gold">Int.–Advanced</span></td></tr>
+      <tr><td>4</td><td>Grants &amp; Foundation Relations</td><td><span class="badge badge-gold">Intermediate</span></td></tr>
+      <tr><td>5</td><td>Annual Fund &amp; Direct Marketing</td><td><span class="badge badge-green">Beginner–Int.</span></td></tr>
+      <tr><td>6</td><td>Events &amp; Campaign Fundraising</td><td><span class="badge badge-green">Beginner–Int.</span></td></tr>
+      <tr><td>7</td><td>Planned Giving &amp; Legacy Programs</td><td><span class="badge badge-gold">Int.–Advanced</span></td></tr>
+      <tr><td>8</td><td>Capital Campaigns</td><td><span class="badge badge-gray">Advanced</span></td></tr>
+      <tr><td>9</td><td>Fundraising Data, Metrics &amp; Technology</td><td><span class="badge badge-gold">Int.–Advanced</span></td></tr>
+      <tr><td>10</td><td>Building a Culture of Philanthropy</td><td><span class="badge badge-gold">Int.–Advanced</span></td></tr>
+    </table>
+
+    <p>Each module card on the dashboard shows a <strong>color-coded accent bar</strong>, the module level, and a mini progress bar showing how many of its lessons and quizzes you've completed.</p>
+
+    <h3>Module Detail View</h3>
+    <p>Click any module card to open it. You'll see:</p>
+    <ul>
+      <li><strong>Module header</strong> — title, description, difficulty level, lesson count, and estimated time</li>
+      <li><strong>Learning Objectives</strong> — the skills you'll develop in this module</li>
+      <li><strong>Lesson list</strong> — all lessons and the module quiz, each showing completion status</li>
+      <li><strong>Toolkit download</strong> (where available) — a green download box to grab the Excel toolkit for that module</li>
+    </ul>
+
+    <h3 id="lessons">Lessons</h3>
+    <p>Click any lesson row to open the Lesson Player. Each lesson contains:</p>
+    <ul>
+      <li><strong>Content tab</strong> — the full lesson text with callout boxes, comparison tables, and practical examples</li>
+      <li><strong>Notes tab</strong> — a personal note-taking area. Notes are saved automatically per lesson.</li>
+      <li><strong>Activity tab</strong> — a reflective exercise to apply the lesson to your organization. Responses are saved per lesson.</li>
+    </ul>
+    <p>Use the <strong>← Prev</strong> and <strong>Next →</strong> buttons at the top to move between lessons without returning to the module view. The current lesson number and module name are shown in the breadcrumb trail.</p>
+
+    <div class="note note-green">
+      <strong>Marking complete:</strong> Click <strong>"Mark as Complete"</strong> at the bottom of any lesson to log it as done. The lesson row turns green and your progress bar updates. Completing all lessons <em>and</em> the module quiz marks the full module as complete.
+    </div>
+
+    <h3 id="quizzes">Quizzes</h3>
+    <p>Each module ends with a <strong>5-question multiple-choice quiz</strong>. Quizzes are found at the bottom of each module's lesson list, labeled with a 📝 quiz badge.</p>
+    <p>When you take a quiz:</p>
+    <ul>
+      <li>Select your answer for each question, then click <strong>Submit Quiz</strong></li>
+      <li>Correct answers are shown in green, incorrect answers in red</li>
+      <li>Each question includes an <strong>explanation</strong> that appears after submission</li>
+      <li>Your score (e.g., "4/5 — 80%") is shown at the top</li>
+      <li>A score of <strong>4/5 or higher</strong> counts the quiz as passed and marks it complete</li>
+    </ul>
+    <div class="note note-gold">
+      <strong>Re-taking quizzes:</strong> You can retake any quiz at any time. Only a passing score (4/5+) marks the quiz as complete in your progress tracking.
+    </div>
+
+    <h3 id="notes">Notes &amp; Activities</h3>
+    <p>The <strong>Notes</strong> tab in each lesson lets you jot down reflections, quotes, or action items. Click <strong>Save Notes</strong> to store them — a confirmation message appears briefly. Notes persist between sessions.</p>
+    <p>The <strong>Activity</strong> tab presents a practical exercise tied to the lesson content. Type your response in the text area and click <strong>Save Response</strong>. Activities are stored per-lesson and can be revisited and updated at any time.</p>
+
+    <h3 id="toolkits">Excel Toolkits</h3>
+    <p>Several modules include a downloadable <strong>Excel Toolkit</strong> — a professional-grade spreadsheet designed to help you apply that module's concepts at your organization. The toolkit appears as a green download box at the top of the module detail view.</p>
+    <p>Click <strong>"Download Toolkit (Excel)"</strong> to save the file to your computer. Each toolkit opens in Microsoft Excel or any compatible spreadsheet application.</p>
+    <p>See <a href="#toolkits-list">Section 10 — Toolkit Reference</a> for the complete list of available toolkits and what each contains.</p>
+
+    <h3 id="search">Lesson Search</h3>
+    <p>On the <strong>Course Modules</strong> tab, a <strong>search bar</strong> sits above the module grid. Type any keyword to instantly search all lesson titles across all 10 modules. Results show the lesson title, module, level, and duration. Click <strong>Go →</strong> or press Enter to jump directly to that lesson.</p>
+    <p>Click the <strong>✕</strong> button in the search bar to clear the search and return to the full module grid.</p>
+  </section>
+
+
+  <!-- ═══ 4. GLOSSARY ═══ -->
+  <section class="section" id="glossary">
+    <h2>4. Glossary</h2>
+    <p>The <strong>Glossary</strong> tab (on the dashboard) contains over 60 fundraising terms defined in plain, practical language — from Annual Fund and Bequest to SYBUNT and Unrestricted Gift.</p>
+
+    <h3>Searching the Glossary</h3>
+    <p>Type any word into the <strong>search bar</strong> at the top of the Glossary tab. The list filters in real time to show matching terms and definitions. Clear the search to see all terms.</p>
+
+    <h3>Browsing by Letter</h3>
+    <p>Click any <strong>letter button</strong> in the alphabet strip to jump to terms beginning with that letter. Click the active letter again (or click a new letter) to navigate. Clicking "All" resets the filter to show every term.</p>
+
+    <h3>Glossary Entry Format</h3>
+    <p>Each entry shows the term, its abbreviation (if applicable), and a full definition. Some key terms are referenced directly in lesson content throughout the course.</p>
+  </section>
+
+
+  <!-- ═══ 5. RESOURCE LIBRARY ═══ -->
+  <section class="section" id="resources">
+    <h2>5. Resource Library</h2>
+    <p>The <strong>Resource Library</strong> tab (on the dashboard) provides a curated collection of external tools, guides, templates, and references organized by topic area. Resources are grouped into categories such as:</p>
+    <ul>
+      <li>Donor Research &amp; Wealth Screening Tools</li>
+      <li>CRM &amp; Database Platforms</li>
+      <li>Direct Mail &amp; Email Marketing</li>
+      <li>Grant Research Databases</li>
+      <li>Sector Data &amp; Benchmarking Sources</li>
+      <li>Professional Associations &amp; Continuing Education</li>
+    </ul>
+    <p>Each resource card shows the resource name, a brief description, and a link to the external site. Links open in a new browser tab.</p>
+    <div class="note note-gray">
+      The Resource Library contains links to third-party websites. Build Your Club is not affiliated with and does not endorse any of these external providers. Resource availability and pricing may change.
+    </div>
+  </section>
+
+
+  <!-- ═══ 6. STREAK TRACKING ═══ -->
+  <section class="section" id="streak">
+    <h2>6. Streak Tracking</h2>
+    <p>The streak system encourages daily learning by tracking consecutive days on which you complete at least one lesson or quiz.</p>
+
+    <table class="tbl">
+      <tr><th>Term</th><th>Meaning</th></tr>
+      <tr><td><strong>Current Streak</strong></td><td>The number of consecutive days you've completed at least one lesson. Resets to zero if you miss a day.</td></tr>
+      <tr><td><strong>Best Streak</strong></td><td>Your personal record — the longest streak you've ever achieved. Preserved even when a current streak breaks.</td></tr>
+      <tr><td><strong>Streak Active</strong></td><td>If you've completed a lesson today, the streak card turns orange and shows "Active today ✓".</td></tr>
+    </table>
+
+    <p>The streak icon changes as your streak grows:</p>
+    <ul>
+      <li><strong>0 days:</strong> — (no streak yet)</li>
+      <li><strong>1–2 days:</strong> 🔥 (starting out)</li>
+      <li><strong>3–6 days:</strong> 💥 (building momentum)</li>
+      <li><strong>7+ days:</strong> 🔥 (on fire!)</li>
+    </ul>
+    <div class="note note-blue">
+      Streak data is stored locally in your browser. It will not carry over if you switch browsers or clear your browser's local storage.
+    </div>
+  </section>
+
+
+  <!-- ═══ 7. CERTIFICATE ═══ -->
+  <section class="section" id="certificate">
+    <h2>7. Certificate of Completion</h2>
+    <p>When you complete <strong>all 10 modules</strong> — meaning every lesson is marked complete and every quiz has a passing score — a congratulations banner appears on your dashboard and your <strong>Certificate of Completion</strong> becomes available.</p>
+
+    <h3>Viewing Your Certificate</h3>
+    <p>Click <strong>"View &amp; Print Your Certificate"</strong> from the completion banner or the certificate button that appears in the header. A full-page certificate overlay opens showing:</p>
+    <ul>
+      <li>Your full name (from your account)</li>
+      <li>Course title: <em>Nonprofit Fundraising &amp; Development</em></li>
+      <li>Completion date</li>
+      <li>Build Your Club seal and signature line</li>
+    </ul>
+
+    <h3>Printing Your Certificate</h3>
+    <p>Click <strong>"🖨 Print / Save PDF"</strong> in the certificate overlay. Your browser's print dialog opens. Select <strong>"Save as PDF"</strong> to save a digital copy, or choose a physical printer to print it. For best results, use <strong>landscape orientation</strong> and enable "Background graphics" in your print settings.</p>
+    <p>Click <strong>"✕ Close"</strong> to dismiss the certificate and return to your dashboard.</p>
+
+    <div class="note note-green">
+      <strong>Certificate tip:</strong> Your name on the certificate comes directly from your account's First Name + Last Name fields. Make sure you entered your full name during registration to ensure the certificate looks correct.
+    </div>
+  </section>
+
+
+  <!-- ═══ 8. TEAM ENROLLMENT ═══ -->
+  <section class="section" id="team">
+    <h2>8. Team Enrollment</h2>
+    <p>The Team Enrollment feature allows nonprofit staff teams to learn together. A <strong>Team Leader</strong> creates a team and shares a team code; <strong>Team Members</strong> join using that code. Team Leaders can view their team's learning progress from a dedicated team dashboard.</p>
+
+    <h3 id="team-leader">Becoming a Team Leader</h3>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Sign in</strong> to the course with your account.</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Look for the team prompt</strong> on your dashboard. If you are not yet part of a team, a call-to-action card appears offering you the option to create one.</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Click "Create a Team"</strong> and enter a Team Name (e.g., your organization's name). Click Create.</div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-body"><strong>Your Team Code is generated</strong> automatically. Share this 6-character code with your colleagues so they can join.</div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-body"><strong>Access your Team Dashboard</strong> via the <strong>👥 My Team</strong> button in the header.</div></div>
+    </div>
+
+    <h3>Your Team Code</h3>
+    <p>Your team code is a short, unique identifier visible at the top of your Team Dashboard. Share it with anyone you want to add to your team. Each team has one leader and can have unlimited members.</p>
+
+    <h3 id="team-member">Joining a Team as a Member</h3>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Get the team code</strong> from your Team Leader.</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-body"><strong>During signup</strong>, enter the team code in the Team Code field on the registration form.</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Alternatively, if already registered</strong>, the dashboard shows a "Join a Team" prompt if you are not yet on a team. Enter your team code there.</div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-body"><strong>You're added to the team</strong> immediately. Your progress will now appear in your Team Leader's team dashboard.</div></div>
+    </div>
+
+    <h3>👥 My Team Page (Team Leaders)</h3>
+    <p>Team Leaders see a <strong>👥 My Team</strong> button in the header after creating a team. This page shows:</p>
+    <ul>
+      <li>Your team name and team code</li>
+      <li>Each team member's name, email, lessons completed, modules completed, and current streak</li>
+      <li>A sortable summary table of all member progress</li>
+    </ul>
+    <div class="note note-blue">
+      <strong>Note:</strong> Team Leaders can see member progress, but cannot view member notes or quiz answers — only completion counts and streaks.
+    </div>
+  </section>
+
+
+  <!-- ═══ 9. ADMIN PANEL ═══ -->
+  <section class="section" id="admin">
+    <h2>9. Admin Panel</h2>
+    <p>The <strong>Admin Panel</strong> is accessible to users with the <code>admin</code> role. Admins see an <strong>Admin</strong> button in the header after signing in.</p>
+
+    <h3>Accessing the Admin Panel</h3>
+    <p>Click the <strong>Admin</strong> button in the top-right header. The Admin Panel opens, showing a full overview of all registered users and their course activity.</p>
+
+    <h3>Summary Statistics</h3>
+    <p>Four stat cards at the top of the Admin Panel show:</p>
+    <ul>
+      <li><strong>Total Users</strong> — all registered accounts</li>
+      <li><strong>Admin Accounts</strong> — users with admin privileges</li>
+      <li><strong>Active Streaks</strong> — users who completed a lesson today</li>
+      <li><strong>Avg. Lessons Completed</strong> — mean lessons finished across all users</li>
+    </ul>
+
+    <h3>User Cards &amp; Search</h3>
+    <p>Below the stats, every registered user appears as a row in a searchable table. Each row shows:</p>
+    <ul>
+      <li>Name and email</li>
+      <li>Account role (Admin or Student)</li>
+      <li>Lessons completed and modules completed</li>
+      <li>Current streak (days)</li>
+      <li>A <strong>Delete</strong> button (with confirmation) to remove a user account</li>
+    </ul>
+    <p>Use the <strong>search bar</strong> at the top of the user table to filter by name or email in real time.</p>
+
+    <h3>Exporting User Data</h3>
+    <p>Click <strong>"Export CSV"</strong> to download a comma-separated file containing all user data (name, email, role, lessons completed, modules completed, streak). The file can be opened in Excel or Google Sheets for reporting.</p>
+
+    <h3>Module Completion Rates</h3>
+    <p>A second table in the Admin Panel shows each module's <strong>completion rate</strong> — the percentage of users who have completed every lesson and quiz in that module — helping you identify which content is most and least completed across your user base.</p>
+  </section>
+
+
+  <!-- ═══ 10. TOOLKIT REFERENCE ═══ -->
+  <section class="section" id="toolkits-list">
+    <h2>10. Toolkit Reference</h2>
+    <p>The following Excel toolkits are available for download within their respective modules. Each is a multi-sheet professional workbook designed to support immediate on-the-job application.</p>
+
+    <div class="tk-row">
+      <div class="tk-icon">📊</div>
+      <div><div class="tk-label">Individual Giving &amp; Donor Cultivation Tracker</div><div class="tk-mod">Module 2 — Sheets: Dashboard, Donor Pipeline, Moves Management, Solicitation Tracker, Stewardship Calendar, Retention Analysis, Lapsed Donor Tracker</div></div>
+    </div>
+    <div class="tk-row">
+      <div class="tk-icon">📊</div>
+      <div><div class="tk-label">Major Gifts &amp; Moves Management Tracker</div><div class="tk-mod">Module 3 — Sheets: Dashboard, Prospect Research Profiles, Moves Management, Proposal Tracker, Stewardship Plans, Portfolio Review, 80-20 Revenue Analysis</div></div>
+    </div>
+    <div class="tk-row">
+      <div class="tk-icon">📊</div>
+      <div><div class="tk-label">Grant Proposal Toolkit</div><div class="tk-mod">Module 4 — Sheets: Grant Pipeline, Funder Research, Proposal Tracker, Budget Builder, Reporting Calendar, LOI Tracker</div></div>
+    </div>
+    <div class="tk-row">
+      <div class="tk-icon">📊</div>
+      <div><div class="tk-label">Capital Campaign Planning Worksheet</div><div class="tk-mod">Module 8 — Sheets: Dashboard, Feasibility Assessment, Gift Range Chart, Prospect Pool, Campaign Timeline, Campaign Budget, Donor Recognition</div></div>
+    </div>
+    <div class="tk-row">
+      <div class="tk-icon">📊</div>
+      <div><div class="tk-label">Fundraising Dashboard &amp; Metrics Tracker</div><div class="tk-mod">Module 9 — Sheets: Dashboard, Donor Retention, Revenue by Source, Appeal Performance, Monthly Progress, Donor Pyramid, KPI Benchmarks</div></div>
+    </div>
+
+    <div class="note note-blue">
+      <strong>Using the toolkits:</strong> All toolkits are built in Excel (.xlsx) format and work in Microsoft Excel 2016 or later, Google Sheets (import via File → Import), and LibreOffice Calc. Yellow-highlighted cells are input fields. All formulas update automatically when you enter your data.
+    </div>
+  </section>
+
+
+  <!-- ═══ 11. FAQ ═══ -->
+  <section class="section" id="faq">
+    <h2>11. FAQ &amp; Troubleshooting</h2>
+
+    <div class="faq-item">
+      <div class="faq-q">My progress was reset. What happened?</div>
+      <div class="faq-a">All course data is stored in your browser's local storage. Clearing your browser history/cache, switching browsers, or using a private/incognito window will result in a fresh start. Always use the same browser and user profile to preserve your progress.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Can I use the course on multiple devices?</div>
+      <div class="faq-a">Because data is stored locally (not in a cloud account), progress does not sync across devices. Use one consistent browser on one device for the best experience.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">I completed a quiz but my module doesn't show as complete.</div>
+      <div class="faq-a">A module is marked complete only when all lessons AND the quiz are marked done. Make sure every lesson row shows a green checkmark, and that your quiz score was 4/5 or higher.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">The quiz won't let me submit. What do I do?</div>
+      <div class="faq-a">You must answer all 5 questions before the Submit button becomes active. Scroll through the quiz to ensure no question was skipped.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">My streak disappeared even though I used the course yesterday.</div>
+      <div class="faq-a">Streaks require completing (marking done) at least one lesson per day — simply opening a lesson or reading it does not count. Click "Mark as Complete" at the bottom of a lesson to register it.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">The Excel toolkit file won't open.</div>
+      <div class="faq-a">Ensure the file downloaded completely (check your Downloads folder). Open it in Microsoft Excel 2016+, Google Sheets (File → Import → Upload), or LibreOffice Calc. If Excel shows a security warning, click "Enable Editing."</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">I don't see the Admin button even though I'm an admin.</div>
+      <div class="faq-a">The Admin button only appears for accounts with the <code>admin</code> role. If you should have admin access, contact your course administrator to verify your account role in the user data.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">My team members aren't appearing on my Team Dashboard.</div>
+      <div class="faq-a">Make sure your team members entered the correct team code when registering or joining. Team codes are case-sensitive. Ask members to check their account and confirm they see their team name on the dashboard.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">I forgot my password. How do I reset it?</div>
+      <div class="faq-a">Passwords are stored locally in your browser. If you've forgotten yours, you can create a new account with the same email address — note that this will create a separate progress record. Contact your administrator if you need to merge accounts.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">My certificate shows the wrong name.</div>
+      <div class="faq-a">Your certificate pulls your name from the First Name and Last Name fields you entered at registration. These fields are set at signup and cannot be edited after account creation in the current version of the app.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">The lesson search isn't finding what I'm looking for.</div>
+      <div class="faq-a">The search bar on the Course Modules tab searches lesson <em>titles</em> only. For content inside lessons, navigate to the relevant module and use your browser's built-in Find function (<kbd>Ctrl+F</kbd> / <kbd>Cmd+F</kbd>) once you're inside a lesson.</div>
+    </div>
+  </section>
+
+  <div style="text-align:center;padding:32px 0 16px;color:var(--muted);font-size:12.5px;border-top:1px solid var(--border);margin-top:20px;">
+    Nonprofit Fundraising &amp; Development — User Guide &nbsp;·&nbsp; Build Your Club &nbsp;·&nbsp; <em>All course content and toolkits are for educational use.</em>
+  </div>
+
+</main>
+</div>
+</body>
+</html>
