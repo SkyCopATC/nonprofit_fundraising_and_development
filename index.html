@@ -6625,7 +6625,7 @@ function render(html) {
   const users = LS.getUsers();
   if (!users.find(u => u.email === 'skycopatc@yahoo.com')) {
     users.unshift({ first:'Steve', last:'Copatrick', org:'Build Your Club',
-      email:'skycopatc@yahoo.com', pass:'Buildyourclub', role:'admin', created:Date.now() });
+      email:'skycopatc@yahoo.com', pass:'change-me-in-settings', role:'admin', created:Date.now() });
     LS.saveUsers(users);
   }
   const saved = localStorage.getItem('nfd_session');
