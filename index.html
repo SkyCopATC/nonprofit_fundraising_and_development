@@ -5002,7 +5002,9 @@ function doSignup() {
     if (!team) { showErr('Team code not found. Please check the code and try again.'); return; }
     joinedTeamId = team.id;
   }
-  const user = { first, last, org, email, pass, role: 'student', teamId: joinedTeamId, created: Date.now() };
+  // First registered user in this browser is granted the admin role (no email hardcoded in source)
+  const role = users.length === 0 ? 'admin' : 'student';
+  const user = { first, last, org, email, pass, role, teamId: joinedTeamId, created: Date.now() };
   users.push(user);
   LS.saveUsers(users);
   loginUser(user);
@@ -6622,12 +6624,9 @@ function render(html) {
 
 /* ===================== INIT ===================== */
 (function init() {
-  const users = LS.getUsers();
-  if (!users.find(u => u.email === 'skycopatc@yahoo.com')) {
-    users.unshift({ first:'Steve', last:'Copatrick', org:'Build Your Club',
-      email:'skycopatc@yahoo.com', pass:'change-me-in-settings', role:'admin', created:Date.now() });
-    LS.saveUsers(users);
-  }
+  // No account is seeded on load. The first user who registers in this browser
+  // is automatically granted the admin role (see registration handler).
+  // No personal email is hardcoded in source.
   const saved = localStorage.getItem('nfd_session');
   if (saved) {
     const user = JSON.parse(saved);
